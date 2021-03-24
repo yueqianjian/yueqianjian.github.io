@@ -1,0 +1,1 @@
+import{o as n,g as r,m as a}from"./vendor.66baf106.js";const d={},o={class:"admin"},s=a("p",null,"Admin页面权限测试页",-1),e=a("p",null,"该页面仅为Admin用户权限所有",-1);d.render=function(a,d){return n(),r("div",o,[s,e])};export default d;
