@@ -1,1 +1,0 @@
-import{o as s,g as e,m as t}from"./vendor.66baf106.js";const n={},r={class:"guest"},u=t("p",null,"Guest页面权限测试页",-1),o=t("p",null,"该页面仅为Guest用户权限所有",-1);n.render=function(t,n){return s(),e("div",r,[u,o])};export default n;
