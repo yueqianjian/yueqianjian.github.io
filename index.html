@@ -1,16 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="./favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>yueqianjian</title>
-  <script type="module" crossorigin src="./assets/index.1ff44bf4.js"></script>
-  <link rel="modulepreload" href="./assets/vendor.7d5d7301.js">
-  <link rel="stylesheet" href="./assets/index.e4ce502c.css">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+	</script>
+	<script>
+		(function () {
+			emailjs.init({
+				publicKey: "RP9-2xiPyhsbYCfRE",
+			});
+		})();
+
+		let code = "sz000858"
+
+		let form = {
+			name: '股价',
+			item_name: "",
+			price: "",
+			result: ""
+		};
+		async function getPrice() {
+			let url = `https://qt.gtimg.cn/q=${code}`
+			const res = await fetch(url)
+			const buffer = await res.arrayBuffer()
+			const decoder = new TextDecoder("gbk");
+			const text = decoder.decode(buffer);
+			let list = text.split("~")
+			form.item_name = list[1]
+			form.price = list[3]
+			// （当前价 - 买入价） * 股数
+			let result = (list[3] - 144.4) * 600
+			form.result = result.toFixed(2)
+			sendEmail()
+		}
+
+		function sendEmail() {
+			emailjs.send('service_7wos5xd', 'template_81cir55', form).then(
+				(response) => {
+					console.log('SUCCESS!', response.status, response.text);
+				},
+				(error) => {
+					console.log('FAILED...', error);
+				},
+			);
+		}
+
+		setInterval(() => {
+			getPrice()
+		}, 60 * 1000)
+	</script>
 </head>
-  <body>
-    <div id="app"></div>
-    
-  </body>
+
+<body>
+
+	<button id="btn" onclick="getPrice()">GET</button>
+
+</body>
+
 </html>
